@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 
 import {
-    CaretRightOutlined ,
-    PauseOutlined ,
+    CaretRightOutlined,
+    PauseOutlined,
     ShrinkOutlined,
     ArrowsAltOutlined,
 } from '@ant-design/icons';
@@ -12,32 +12,32 @@ import {
 const GroupControlsButtons: React.FC = () => {
     return (
         <>
-        <Button
+            <Button
                 variant="outlined"
                 shape="circle"
                 size="large"
                 icon={<ShrinkOutlined />}
-           />
-           <Button
+            />
+            <Button
                 variant="outlined"
                 shape="circle"
                 color='default'
                 size="large"
                 icon={<PauseOutlined />}
-           />
+            />
             <Button
                 variant="outlined"
                 shape="circle"
                 size="large"
                 icon={<ArrowsAltOutlined />}
-           />
-           <Button
+            />
+            <Button
                 variant="outlined"
                 shape="circle"
                 color='default'
                 size="large"
                 icon={<CaretRightOutlined />}
-           />
+            />
         </>
     )
 };
