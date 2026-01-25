@@ -11,7 +11,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, isPlaying }) => {
             loop={true}
             width='100%'
             height='100%'
-            preload='asdas'
         />
     )
 };
