@@ -1,42 +1,29 @@
 import { Button } from 'antd';
-
 import {
     CaretRightOutlined,
     PauseOutlined,
     ShrinkOutlined,
     ArrowsAltOutlined,
 } from '@ant-design/icons';
+import { type GroupControlsButtonsProps } from '../types/types';
 
-
-
-const GroupControlsButtons: React.FC = () => {
+const GroupControlsButtons: React.FC<GroupControlsButtonsProps> = ({ handlePlayer, handleScreenSize, isPlaying, isMiniScreen }) => {
     return (
         <>
             <Button
                 variant="outlined"
                 shape="circle"
                 size="large"
-                icon={<ShrinkOutlined />}
+                onClick={handleScreenSize}
+                icon={isMiniScreen ? <ArrowsAltOutlined /> : <ShrinkOutlined />}
             />
             <Button
                 variant="outlined"
                 shape="circle"
-                color='default'
+                color={isPlaying ? 'blue' : 'default'}
                 size="large"
-                icon={<PauseOutlined />}
-            />
-            <Button
-                variant="outlined"
-                shape="circle"
-                size="large"
-                icon={<ArrowsAltOutlined />}
-            />
-            <Button
-                variant="outlined"
-                shape="circle"
-                color='default'
-                size="large"
-                icon={<CaretRightOutlined />}
+                onClick={handlePlayer}
+                icon={isPlaying ? <PauseOutlined /> : <CaretRightOutlined />}
             />
         </>
     )

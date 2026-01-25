@@ -1,4 +1,4 @@
-import { Typography } from 'antd'
+import { Typography } from 'antd';
 
 const TitleModal: React.FC = () => {
     return (
@@ -12,6 +12,6 @@ const TitleModal: React.FC = () => {
             Player
         </Typography.Title>
     )
-}
+};
 
-export default TitleModal
+export default TitleModal;

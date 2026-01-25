@@ -1,4 +1,3 @@
-import VideoPlayer from "./components/VideoPlayer"
 import VideoPlayerModal from "./components/VideoPlayerModal"
 
 function App() {
