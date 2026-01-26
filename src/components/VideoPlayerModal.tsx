@@ -47,13 +47,13 @@ const VideoPlayerModal: React.FC = () => {
                 title={<TitleModal />}
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 footer={
-                    <
-                        GroupControlsButtons
+                    <GroupControlsButtons
                         handlePlayer={handlePlayer}
                         handleScreenSize={handleScreenSize}
                         isPlaying={isPlaying}
                         isMiniScreen={isMiniScreen}
-                    />}
+                    />
+                }
                 open={isModalOpen}
                 onCancel={() => send({ type: 'toggle' })}
                 width={isMiniScreen ? '50vw' : '100vw'}
