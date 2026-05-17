@@ -1,31 +1,40 @@
 export interface VideoContext {
     src: string;
+    size: 'small' | 'large';
+    volume: number
 }
 
 export type VideoEvents =
-    | { type: 'toggle' }
-    | { type: 'key.escape' }
-    | { type: 'play' }
-    | { type: 'stop' }
-    | { type: 'miniScreen' }
-    | { type: 'fullScreen' };
+    | { type: 'PLAY' }
+    | { type: 'PAUSE' }
+    | { type: 'TOGGLE_SIZE' }
+    | { type: 'DETACH' }       // оторвать плеер
+    | { type: 'CLOSE_DETACHED' }
+    | { type: 'SET_VOLUME'; volume: number }
+    | { type: 'MUTE' }
+    | { type: 'UNMUTE' }
+    | { type: 'TOGGLE_MUTE' };
 
-export type VideoStates =
-    | { value: 'closedPlayer'; context: VideoContext }
-    | { value: 'openPlayer'; context: VideoContext }
-    | { value: 'fullScreenPlaying'; context: VideoContext }
-    | { value: 'fullScreenPause'; context: VideoContext }
-    | { value: 'miniScreenPlaying'; context: VideoContext }
-    | { value: 'miniScreenPause'; context: VideoContext };
+export type VideoStates = {
+    playback: 'playing' | 'paused';
+    ui: 'inline' | 'detached';
+    muted: 'muted' | 'unmuted';
+}
 
 export interface VideoPlayerProps {
     src: string;
-    isPlaying: boolean;
+    volume: number;
+    isMuted: boolean;
+    handlePlayer: () => void;
 };
 
 export interface GroupControlsButtonsProps {
     handlePlayer: () => void;
     handleScreenSize: () => void;
+    handleVolumeChange: (volume: number) => void;
+    onToggleMute: () => void;
     isPlaying: boolean;
     isMiniScreen: boolean;
+    volume: number;
+    isMuted: boolean;
 };
