@@ -1,12 +1,11 @@
 import { Button, Modal, Flex } from 'antd';
+import { useSelector } from '@xstate/react';
 import { PlayCircleOutlined } from '@ant-design/icons';
+
 import VideoPlayer from './VideoPlayer';
 import TitleModal from './TitleModal';
 import GroupControlsButtons from './GroupControlsButtons';
-
 import { videoActor } from '../machine/videoActor';
-
-import { useSelector } from '@xstate/react';
 
 const VideoPlayerModal: React.FC = () => {
 
@@ -63,7 +62,7 @@ const VideoPlayerModal: React.FC = () => {
             handlePlayer={handlePlayer}
             handleScreenSize={handleScreenSize}
             handleVolumeChange={handleVolumeChange}
-            onToggleMute={onToggleMute} 
+            onToggleMute={onToggleMute}
             isPlaying={isPlaying}
             isMiniScreen={size === 'small'}
             isMuted={isMuted}
@@ -74,7 +73,7 @@ const VideoPlayerModal: React.FC = () => {
         onCancel={() => {
           actor.send({ type: 'CLOSE_DETACHED' });
         }}
-        width={size === 'small' ? '50vw' : '100vw'}
+        width={size === 'small' ? 'max(50vw,300px)' : '100vw'}
         styles={{
           container: {
             borderRadius: 0,

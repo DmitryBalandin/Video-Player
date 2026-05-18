@@ -3,8 +3,6 @@ import { type VideoContext, type VideoEvents, type VideoStates } from "../types/
 
 
 
-
-
 const actions = {
   playVideo: () => {
     console.log('[ACTION] playVideo');
@@ -69,18 +67,18 @@ export const machine = setup({
       states: {
         muted: {
           entry: 'muteVideo',
-          on:{
-            UNMUTE:'unmuted',
-            TOGGLE_MUTE:'unmuted'
+          on: {
+            UNMUTE: 'unmuted',
+            TOGGLE_MUTE: 'unmuted'
           }
         },
 
-        unmuted:{
-          entry:'unmuteVideo',
+        unmuted: {
+          entry: 'unmuteVideo',
 
           on: {
-            MUTE:'muted',
-            TOGGLE_MUTE:'muted'
+            MUTE: 'muted',
+            TOGGLE_MUTE: 'muted'
           }
         }
       }
@@ -119,9 +117,9 @@ export const machine = setup({
     SET_VOLUME: {
       actions: [
         assign({ volume: ({ event }) => event.volume }),
-         raise(() => ({
-                type: 'UNMUTE',
-              })),
+        raise(() => ({
+          type: 'UNMUTE',
+        })),
         'setVolume'
       ]
     }
