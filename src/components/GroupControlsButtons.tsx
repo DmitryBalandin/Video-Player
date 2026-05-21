@@ -1,13 +1,13 @@
-import { Button, Slider, Flex } from 'antd';
 import {
+  ArrowsAltOutlined,
   CaretRightOutlined,
+  MutedOutlined,
   PauseOutlined,
   ShrinkOutlined,
-  ArrowsAltOutlined,
-  MutedOutlined,
-  SoundOutlined
+  SoundOutlined,
 } from '@ant-design/icons';
-import { type GroupControlsButtonsProps } from '../types/types';
+import { Button, Flex, Slider } from 'antd';
+import type { GroupControlsButtonsProps } from '../types/types';
 
 const GroupControlsButtons: React.FC<GroupControlsButtonsProps> = ({
   handlePlayer,
@@ -17,14 +17,10 @@ const GroupControlsButtons: React.FC<GroupControlsButtonsProps> = ({
   isPlaying,
   isMiniScreen,
   volume,
-  isMuted
+  isMuted,
 }) => {
   return (
-    <Flex
-      align="center"
-      justify='end'
-      gap={12}
-    >
+    <Flex align="center" justify="end" gap={12}>
       <Button
         variant="outlined"
         shape="circle"
@@ -53,11 +49,7 @@ const GroupControlsButtons: React.FC<GroupControlsButtonsProps> = ({
           variant="text"
           size="small"
           onClick={onToggleMute}
-          icon={
-            isMuted || volume === 0
-              ? <MutedOutlined />
-              : <SoundOutlined />
-          }
+          icon={isMuted || volume === 0 ? <MutedOutlined /> : <SoundOutlined />}
         />
 
         <Slider
@@ -71,13 +63,12 @@ const GroupControlsButtons: React.FC<GroupControlsButtonsProps> = ({
             margin: 0,
           }}
           tooltip={{
-            formatter: (value) =>
-              `${Math.round((value || 0) * 100)}%`,
+            formatter: (value) => `${Math.round((value || 0) * 100)}%`,
           }}
         />
       </Flex>
     </Flex>
-  )
+  );
 };
 
 export default GroupControlsButtons;

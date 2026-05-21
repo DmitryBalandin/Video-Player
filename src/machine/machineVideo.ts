@@ -1,7 +1,5 @@
-import { setup, assign, raise } from "xstate";
-import { type VideoContext, type VideoEvents, type VideoStates } from "../types/types";
-
-
+import { assign, raise, setup } from 'xstate';
+import type { VideoContext, VideoEvents, VideoStates } from '../types/types';
 
 const actions = {
   playVideo: () => {
@@ -28,7 +26,6 @@ const actions = {
   },
 };
 
-
 export const machine = setup({
   types: {} as {
     context: VideoContext;
@@ -42,7 +39,7 @@ export const machine = setup({
   context: {
     src: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
     size: 'large',
-    volume: 0
+    volume: 0,
   },
   states: {
     playback: {
@@ -69,8 +66,8 @@ export const machine = setup({
           entry: 'muteVideo',
           on: {
             UNMUTE: 'unmuted',
-            TOGGLE_MUTE: 'unmuted'
-          }
+            TOGGLE_MUTE: 'unmuted',
+          },
         },
 
         unmuted: {
@@ -78,12 +75,11 @@ export const machine = setup({
 
           on: {
             MUTE: 'muted',
-            TOGGLE_MUTE: 'muted'
-          }
-        }
-      }
-    }
-    ,
+            TOGGLE_MUTE: 'muted',
+          },
+        },
+      },
+    },
     ui: {
       initial: 'inline',
       states: {
@@ -120,9 +116,8 @@ export const machine = setup({
         raise(() => ({
           type: 'UNMUTE',
         })),
-        'setVolume'
-      ]
-    }
+        'setVolume',
+      ],
+    },
   },
 });
-

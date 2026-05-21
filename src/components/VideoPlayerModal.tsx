@@ -1,10 +1,9 @@
-import { Button, Modal, Flex } from 'antd';
 import { PlayCircleOutlined } from '@ant-design/icons';
-
-import VideoPlayer from './VideoPlayer';
-import TitleModal from './TitleModal';
-import GroupControlsButtons from './GroupControlsButtons';
+import { Button, Flex, Modal } from 'antd';
 import { VideoPlayerContext } from '../machine/VideoPlayerContext';
+import GroupControlsButtons from './GroupControlsButtons';
+import TitleModal from './TitleModal';
+import VideoPlayer from './VideoPlayer';
 
 const VideoPlayerModal: React.FC = () => {
   const actorRef = VideoPlayerContext.useActorRef();
@@ -76,12 +75,7 @@ const VideoPlayerModal: React.FC = () => {
           },
         }}
       >
-        <VideoPlayer
-          src={videoSrc}
-          volume={volume}
-          handlePlayer={handlePlayer}
-          isMuted={isMuted}
-        />
+        <VideoPlayer src={videoSrc} volume={volume} handlePlayer={handlePlayer} isMuted={isMuted} />
       </Modal>
     </Flex>
   );

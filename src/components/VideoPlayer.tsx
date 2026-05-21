@@ -1,9 +1,9 @@
-import ReactPlayer from 'react-player';
-import { useState } from 'react';
+import { PauseCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import ReactPlayer from 'react-player';
 import { VideoPlayerContext } from '../machine/VideoPlayerContext';
-import { type VideoPlayerProps } from '../types/types';
+import type { VideoPlayerProps } from '../types/types';
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handlePlayer }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -13,6 +13,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
       onClick={isPlaying ? handlePlayer : undefined}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handlePlayer();
+        }
+      }}
+      role="button"
+      tabIndex={0}
       style={{
         position: 'relative',
         width: '100%',
@@ -59,6 +66,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
       {!isPlaying && (
         <div
           onClick={handlePlayer}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              handlePlayer();
+            }
+          }}
+          role="button"
+          tabIndex={0}
           style={{
             position: 'absolute',
             inset: 0,
