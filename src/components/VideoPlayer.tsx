@@ -1,13 +1,31 @@
 import { PauseCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { VideoPlayerContext } from '../machine/VideoPlayerContext';
 import type { VideoPlayerProps } from '../types/types';
+import { throttle } from '../utils/throttle';
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handlePlayer }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const actorRef = VideoPlayerContext.useActorRef();
   const isPlaying = VideoPlayerContext.useSelector((state) => state.matches({ playback: 'playing' }));
+
+  const handleTimeUpdate = useMemo(
+    () =>
+      throttle((e: React.SyntheticEvent<HTMLVideoElement>) => {
+        actorRef.send({ type: 'SET_CURRENT_TIME', currentTime: e.currentTarget.currentTime });
+      }, 500),
+    [actorRef],
+  );
+
+  const handleLoadedMetadata = useCallback(
+    (e: React.SyntheticEvent<HTMLVideoElement>) => {
+      actorRef.send({ type: 'SET_DURATION', duration: e.currentTarget.duration });
+    },
+    [actorRef],
+  );
+
   return (
     <div
       onClick={isPlaying ? handlePlayer : undefined}
@@ -36,6 +54,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
         loop
         width="100%"
         height="100%"
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
       />
 
       {isPlaying && isHovered && (
@@ -111,4 +131,4 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
   );
 };
 
-export default VideoPlayer;
+export default memo(VideoPlayer);

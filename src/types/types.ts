@@ -2,6 +2,8 @@ export interface VideoContext {
   src: string;
   size: 'small' | 'large';
   volume: number;
+  currentTime: number;
+  duration: number;
 }
 
 export type VideoEvents =
@@ -13,7 +15,9 @@ export type VideoEvents =
   | { type: 'SET_VOLUME'; volume: number }
   | { type: 'MUTE' }
   | { type: 'UNMUTE' }
-  | { type: 'TOGGLE_MUTE' };
+  | { type: 'TOGGLE_MUTE' }
+  | { type: 'SET_CURRENT_TIME'; currentTime: number }
+  | { type: 'SET_DURATION'; duration: number };
 
 export type VideoStates = {
   playback: 'playing' | 'paused';

@@ -7,6 +7,7 @@ import {
   SoundOutlined,
 } from '@ant-design/icons';
 import { Button, Flex, Slider } from 'antd';
+import { memo } from 'react';
 import type { GroupControlsButtonsProps } from '../types/types';
 
 const GroupControlsButtons: React.FC<GroupControlsButtonsProps> = ({
@@ -71,4 +72,4 @@ const GroupControlsButtons: React.FC<GroupControlsButtonsProps> = ({
   );
 };
 
-export default GroupControlsButtons;
+export default memo(GroupControlsButtons);

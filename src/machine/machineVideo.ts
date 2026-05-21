@@ -40,6 +40,8 @@ export const machine = setup({
     src: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
     size: 'large',
     volume: 0,
+    currentTime: 0,
+    duration: 0,
   },
   states: {
     playback: {
@@ -95,9 +97,7 @@ export const machine = setup({
           on: {
             CLOSE_DETACHED: {
               target: 'inline',
-              actions: raise(() => ({
-                type: 'PAUSE',
-              })),
+              actions: raise({ type: 'PAUSE' }),
             },
           },
         },
@@ -111,13 +111,17 @@ export const machine = setup({
       }),
     },
     SET_VOLUME: {
-      actions: [
-        assign({ volume: ({ event }) => event.volume }),
-        raise(() => ({
-          type: 'UNMUTE',
-        })),
-        'setVolume',
-      ],
+      actions: [assign({ volume: ({ event }) => event.volume }), raise({ type: 'UNMUTE' }), 'setVolume'],
+    },
+    SET_CURRENT_TIME: {
+      actions: assign({
+        currentTime: ({ event }) => event.currentTime,
+      }),
+    },
+    SET_DURATION: {
+      actions: assign({
+        duration: ({ event }) => event.duration,
+      }),
     },
   },
 });

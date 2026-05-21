@@ -1,5 +1,6 @@
 import { PlayCircleOutlined } from '@ant-design/icons';
 import { Button, Flex, Modal } from 'antd';
+import { useCallback } from 'react';
 import { VideoPlayerContext } from '../machine/VideoPlayerContext';
 import GroupControlsButtons from './GroupControlsButtons';
 import TitleModal from './TitleModal';
@@ -16,13 +17,18 @@ const VideoPlayerModal: React.FC = () => {
   const videoSrc = VideoPlayerContext.useSelector((state) => state.context.src);
   const volume = VideoPlayerContext.useSelector((state) => state.context.volume);
 
-  const handleVolumeChange = (newVolume: number) => {
-    actorRef.send({ type: 'SET_VOLUME', volume: newVolume });
-  };
+  const handleVolumeChange = useCallback(
+    (newVolume: number) => {
+      actorRef.send({ type: 'SET_VOLUME', volume: newVolume });
+    },
+    [actorRef],
+  );
 
-  const handlePlayer = () => actorRef.send({ type: isPlaying ? 'PAUSE' : 'PLAY' });
-  const handleScreenSize = () => actorRef.send({ type: 'TOGGLE_SIZE' });
-  const onToggleMute = () => actorRef.send({ type: 'TOGGLE_MUTE' });
+  const handlePlayer = useCallback(() => actorRef.send({ type: isPlaying ? 'PAUSE' : 'PLAY' }), [actorRef, isPlaying]);
+
+  const handleScreenSize = useCallback(() => actorRef.send({ type: 'TOGGLE_SIZE' }), [actorRef]);
+
+  const onToggleMute = useCallback(() => actorRef.send({ type: 'TOGGLE_MUTE' }), [actorRef]);
 
   return (
     <Flex
