@@ -1,19 +1,13 @@
 import ReactPlayer from 'react-player';
-import { useSelector } from '@xstate/react';
 import { useState } from 'react';
 import { Button } from 'antd';
-import { PlayCircleOutlined, PauseCircleOutlined, } from '@ant-design/icons';
-
-import { videoActor } from '../machine/videoActor';
+import { PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
+import { VideoPlayerContext } from '../machine/VideoPlayerContext';
 import { type VideoPlayerProps } from '../types/types';
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handlePlayer }) => {
-
-  const actor = videoActor
-  const isPlaying = useSelector(actor, (state) => state.matches({ playback: 'playing' }));
-
   const [isHovered, setIsHovered] = useState(false);
-
+  const isPlaying = VideoPlayerContext.useSelector((state) => state.matches({ playback: 'playing' }));
   return (
     <div
       onClick={isPlaying ? handlePlayer : undefined}
@@ -42,13 +36,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
           style={{
             position: 'absolute',
             inset: 0,
-
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-
             background: 'rgba(0,0,0,0.15)',
-           
             transition: '0.2s',
             pointerEvents: 'none',
           }}
@@ -57,7 +48,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
             style={{
               fontSize: 80,
               color: 'white',
-
               opacity: 0.6,
               transform: 'scale(1.05)',
               transition: '0.2s',
@@ -72,11 +62,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
           style={{
             position: 'absolute',
             inset: 0,
-
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-
             background: 'rgba(0,0,0,0.25)',
             cursor: 'pointer',
             transition: '0.2s',

@@ -1,32 +1,29 @@
 import { Button, Modal, Flex } from 'antd';
-import { useSelector } from '@xstate/react';
 import { PlayCircleOutlined } from '@ant-design/icons';
 
 import VideoPlayer from './VideoPlayer';
 import TitleModal from './TitleModal';
 import GroupControlsButtons from './GroupControlsButtons';
-import { videoActor } from '../machine/videoActor';
+import { VideoPlayerContext } from '../machine/VideoPlayerContext';
 
 const VideoPlayerModal: React.FC = () => {
+  const actorRef = VideoPlayerContext.useActorRef();
 
-  const actor = videoActor;
+  const isPlaying = VideoPlayerContext.useSelector((state) => state.matches({ playback: 'playing' }));
+  const isDetached = VideoPlayerContext.useSelector((state) => state.matches({ ui: 'detached' }));
+  const isMuted = VideoPlayerContext.useSelector((state) => state.matches({ muted: 'muted' }));
 
-  const isPlaying = useSelector(actor, (state) => state.matches({ playback: 'playing' }));
-  const isDetached = useSelector(actor, (state) => state.matches({ ui: 'detached' }));
-  const isMuted = useSelector(actor, (state) => state.matches({ muted: 'muted' }));
-
-  const size = useSelector(actor, (state) => state.context.size);
-  const videoSrc = useSelector(actor, (state) => state.context.src);
-  const volume = useSelector(actor, (state) => state.context.volume);
+  const size = VideoPlayerContext.useSelector((state) => state.context.size);
+  const videoSrc = VideoPlayerContext.useSelector((state) => state.context.src);
+  const volume = VideoPlayerContext.useSelector((state) => state.context.volume);
 
   const handleVolumeChange = (newVolume: number) => {
-    actor.send({ type: 'SET_VOLUME', volume: newVolume });
+    actorRef.send({ type: 'SET_VOLUME', volume: newVolume });
   };
 
-  const handlePlayer = () => actor.send({ type: isPlaying ? 'PAUSE' : 'PLAY' })
-  const handleScreenSize = () => actor.send({ type: 'TOGGLE_SIZE' });
-  const onToggleMute = () => actor.send({ type: 'TOGGLE_MUTE' })
-
+  const handlePlayer = () => actorRef.send({ type: isPlaying ? 'PAUSE' : 'PLAY' });
+  const handleScreenSize = () => actorRef.send({ type: 'TOGGLE_SIZE' });
+  const onToggleMute = () => actorRef.send({ type: 'TOGGLE_MUTE' });
 
   return (
     <Flex
@@ -42,8 +39,7 @@ const VideoPlayerModal: React.FC = () => {
           color="purple"
           variant="outlined"
           onClick={() => {
-
-            actor.send({ type: 'DETACH' });
+            actorRef.send({ type: 'DETACH' });
           }}
           icon={<PlayCircleOutlined style={{ fontSize: '50px' }} />}
           style={{
@@ -71,7 +67,7 @@ const VideoPlayerModal: React.FC = () => {
         }
         open={isDetached}
         onCancel={() => {
-          actor.send({ type: 'CLOSE_DETACHED' });
+          actorRef.send({ type: 'CLOSE_DETACHED' });
         }}
         width={size === 'small' ? 'max(50vw,300px)' : '100vw'}
         styles={{

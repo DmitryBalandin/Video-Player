@@ -1,10 +1,12 @@
-import VideoPlayerModal from "./components/VideoPlayerModal"
+import VideoPlayerModal from './components/VideoPlayerModal';
+import { VideoPlayerContext } from './machine/VideoPlayerContext';
 
 function App() {
-
   return (
-    <VideoPlayerModal/>
-  )
+    <VideoPlayerContext.Provider>
+      <VideoPlayerModal />
+    </VideoPlayerContext.Provider>
+  );
 }
 
-export default App
+export default App;
