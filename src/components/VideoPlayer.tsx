@@ -1,12 +1,12 @@
 import { PauseCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { forwardRef, memo, useCallback, useMemo, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { VideoPlayerContext } from '../machine/VideoPlayerContext';
 import type { VideoPlayerProps } from '../types/types';
 import { throttle } from '../utils/throttle';
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handlePlayer }) => {
+const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(({ src, volume, isMuted, handlePlayer }, ref) => {
   const [isHovered, setIsHovered] = useState(false);
   const actorRef = VideoPlayerContext.useActorRef();
   const isPlaying = VideoPlayerContext.useSelector((state) => state.matches({ playback: 'playing' }));
@@ -46,6 +46,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
       }}
     >
       <ReactPlayer
+        ref={ref}
         src={src}
         playing={isPlaying}
         muted={isMuted}
@@ -129,6 +130,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, volume, isMuted, handleP
       )}
     </div>
   );
-};
+});
+
+VideoPlayer.displayName = 'VideoPlayer';
 
 export default memo(VideoPlayer);

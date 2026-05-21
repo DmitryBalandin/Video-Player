@@ -17,7 +17,8 @@ export type VideoEvents =
   | { type: 'UNMUTE' }
   | { type: 'TOGGLE_MUTE' }
   | { type: 'SET_CURRENT_TIME'; currentTime: number }
-  | { type: 'SET_DURATION'; duration: number };
+  | { type: 'SET_DURATION'; duration: number }
+  | { type: 'SEEK'; currentTime: number };
 
 export type VideoStates = {
   playback: 'playing' | 'paused';
@@ -41,4 +42,8 @@ export interface GroupControlsButtonsProps {
   isMiniScreen: boolean;
   volume: number;
   isMuted: boolean;
+}
+
+export interface VideoProgressProps {
+  videoRef: React.RefObject<HTMLVideoElement | null>;
 }

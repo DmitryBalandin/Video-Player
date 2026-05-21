@@ -1,13 +1,15 @@
 import { PlayCircleOutlined } from '@ant-design/icons';
-import { Button, Flex, Modal } from 'antd';
-import { useCallback } from 'react';
+import { Button, Divider, Flex, Modal } from 'antd';
+import { useCallback, useRef } from 'react';
 import { VideoPlayerContext } from '../machine/VideoPlayerContext';
 import GroupControlsButtons from './GroupControlsButtons';
 import TitleModal from './TitleModal';
 import VideoPlayer from './VideoPlayer';
+import VideoProgress from './VideoProgress';
 
 const VideoPlayerModal: React.FC = () => {
   const actorRef = VideoPlayerContext.useActorRef();
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const isPlaying = VideoPlayerContext.useSelector((state) => state.matches({ playback: 'playing' }));
   const isDetached = VideoPlayerContext.useSelector((state) => state.matches({ ui: 'detached' }));
@@ -59,16 +61,20 @@ const VideoPlayerModal: React.FC = () => {
         title={<TitleModal />}
         closable={{ 'aria-label': 'Custom Close Button' }}
         footer={
-          <GroupControlsButtons
-            handlePlayer={handlePlayer}
-            handleScreenSize={handleScreenSize}
-            handleVolumeChange={handleVolumeChange}
-            onToggleMute={onToggleMute}
-            isPlaying={isPlaying}
-            isMiniScreen={size === 'small'}
-            isMuted={isMuted}
-            volume={volume}
-          />
+          <Flex vertical gap={12}>
+            <VideoProgress videoRef={videoRef} />
+            <Divider style={{ margin: 0 }} />
+            <GroupControlsButtons
+              handlePlayer={handlePlayer}
+              handleScreenSize={handleScreenSize}
+              handleVolumeChange={handleVolumeChange}
+              onToggleMute={onToggleMute}
+              isPlaying={isPlaying}
+              isMiniScreen={size === 'small'}
+              isMuted={isMuted}
+              volume={volume}
+            />
+          </Flex>
         }
         open={isDetached}
         onCancel={() => {
@@ -81,7 +87,7 @@ const VideoPlayerModal: React.FC = () => {
           },
         }}
       >
-        <VideoPlayer src={videoSrc} volume={volume} handlePlayer={handlePlayer} isMuted={isMuted} />
+        <VideoPlayer ref={videoRef} src={videoSrc} volume={volume} handlePlayer={handlePlayer} isMuted={isMuted} />
       </Modal>
     </Flex>
   );

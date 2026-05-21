@@ -123,5 +123,10 @@ export const machine = setup({
         duration: ({ event }) => event.duration,
       }),
     },
+    SEEK: {
+      actions: assign({
+        currentTime: ({ event }) => event.currentTime,
+      }),
+    },
   },
 });
