@@ -23,3 +23,6 @@
 
 ## Style
 - Files use 2-space indentation (not 4)
+
+## Custom Tools
+- `countString` — counts lines of code in `src/components/` and warns if any component exceeds 150 lines
