@@ -10,6 +10,7 @@
 - `npm test` / `npm run test` — Vitest watch mode
 - `npm run test:run` — Vitest single run (browser mode, Playwright Chromium)
 - `npm run test:ui` — Vitest with UI (`npm install -D @vitest/ui` first)
+- `npm run preview` — Vite preview of production build
 
 ## Architecture
 - **Entry**: `src/main.tsx` → `src/App.tsx` → `VideoPlayerModal` wrapped in `VideoPlayerContext.Provider`
@@ -17,7 +18,10 @@
 - **Context**: `createActorContext` from `@xstate/react` (`src/machine/VideoPlayerContext.ts`)
 - **UI**: Ant Design v6 (note: uses new `variant` prop on Button, not `type`)
 - **Video**: `react-player` with HLS test stream (hardcoded in machine context)
+- **Utils**: `src/utils/formatTime.ts` (time formatter `m:ss`) and `src/utils/throttle.ts` (leading-edge throttle)
+- **Tests**: Vitest browser mode (Playwright Chromium) in `tests/`, mirroring `src/` structure
 - **No routing, no codegen, no migrations, no env files**
+- **Biome** covers both `src/` and `tests/` (`biome.json: includes: ["src/**", "tests/**"]`)
 
 ## TypeScript constraints
 - `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax` are all strict — use `import type` for type-only imports
