@@ -7,7 +7,9 @@
 - `npm run format` — `biome format --write src/` (auto-format all src/)
 - `npm run check` — `biome check --write src/` (lint + format + organize imports in one pass)
 - No standalone typecheck script; type-checking only via `build`
-- No tests exist in the repo
+- `npm test` / `npm run test` — Vitest watch mode
+- `npm run test:run` — Vitest single run (browser mode, Playwright Chromium)
+- `npm run test:ui` — Vitest with UI (`npm install -D @vitest/ui` first)
 
 ## Architecture
 - **Entry**: `src/main.tsx` → `src/App.tsx` → `VideoPlayerModal` wrapped in `VideoPlayerContext.Provider`
